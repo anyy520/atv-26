@@ -40,13 +40,16 @@ function setup() {
   World.add(world,ball);
   
   //4 criar var con para criar a restriçao anexar uma bola com um ponto próximo ao topo da tela
-  
+  con = Matter.Constraint.create({
+    pointA:{x:200,y:20},
+    bodyB:ball,
+    pointB:{x:0,y:0},
+    length:100,
+    stiffness:0.1
+  });
+  // 5 Adicione con (constraint) in World
+  World.add(world,con);
  
-
-
-
-  
-// 5 Adicione con (constraint) in World
 
 
   
@@ -65,11 +68,13 @@ function draw()
   ellipse(ball.position.x,ball.position.y,20);
  // ground.show();
 //  7  Defina a cor e a largura da linha. Faremos isso usando a função stroke() estrokeWeight()
- 
+push();
+strokeWeight(2);
+stroke(255);
 
-  // Passo 6: Adicione o código para criar uma linha usando a função line().
-  
-  
+// Passo 6: Adicione o código para criar uma linha usando a função line().
+line(con.pointA.x,con.pointA.y,ball.position.x,ball.position.y);
+pop() ;
   Engine.update(engine);
 }
 
@@ -79,3 +84,4 @@ function vForce()
   //9 forma fluida , horizontal.Altere o valor de x e y para fazer o pêndulo mover na horizontal
   Matter.Body.applyForce(ball,{x:0,y:0},{x:0.05,y:0});
 }
+
